@@ -19,7 +19,7 @@ const App = () => {
     { id: 10, name: 'Product 10', description: 'Tata Soulfull Millet Granola, Almonds & Cranberries,Rich in Fibre & Protein, Breakfast Cereal Pouch', price:500, image: 'https://rukminim2.flixcart.com/image/280/280/kqpj4i80/pulses/r/a/z/1-arhar-dal-arhar-dal-natureland-organics-original-imag4npb8twt4dwz.jpeg?q=70' },
   ]);
 
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([]); 
 
   const addToCart = (product) => {
     const existingProduct = cart.find(item => item.id === product.id);
@@ -52,10 +52,22 @@ const App = () => {
       return;
     }
 
+    console.log(userDetails,'user')
+    console.log(cart,'cart')
     const orderDetails = {
-      userDetails,
-      cart,
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      address: userDetails.address,
+      cart: cart.map(item => ({
+        productId: item.id,
+        quantity: item.quantity,
+      })),
     };
+    // const orderDetails = {
+    //   userDetails,
+    //   cart,
+    // };
+    console.log(orderDetails,'orderDetails')
 
     try {
       const response = await fetch('http://localhost:8000/products/orders', {
